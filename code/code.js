@@ -1,6 +1,8 @@
 const grid_o = document.querySelector('.grid');
-const grid_x = document.querySelector('.grid-x');
-const clearbtn=document.querySelector('.clear_button');
+const clearbtn = document.querySelector('.clear_button');
+const changes_btn = document.querySelector('.changes_button');
+let defaultGridSize = 16; 
+createGrid(defaultGridSize);
 
 document.addEventListener('mousedown', function() {
     isMouseDown = true;
@@ -15,6 +17,7 @@ grid_o.addEventListener('mousedown', function(event) {
 });
 
 function createGrid(n) {
+    grid_o.innerHTML = '';
     for (let j = 0; j < n; j++) {
         let grid_x = document.createElement('div');
         grid_x.style.display = 'flex';
@@ -25,12 +28,10 @@ function createGrid(n) {
             createBox(d);
             grid_x.appendChild(d);
             d.addEventListener('mousemove', function () {
-                // d.style.transition = 'background-color 0.01s ease';
                 if(isMouseDown){
                     let r=Math.floor(Math.random() * 256);
                     let g=Math.floor(Math.random() * 256);
                     let b=Math.floor(Math.random() * 256);
-                    // d.style.backgroundColor =`rgb(${r},${g},${b})`;
                     d.style.backgroundColor='black';
                 }
             })
@@ -39,7 +40,6 @@ function createGrid(n) {
 }
 
 function createBox(d) {
-    // d.style.border = '0.005vw dotted rgb(0, 0, 0,.4)';
     d.style.flex = '1 0 auto';
     d.style.aspectRatio = '1 / 1'; 
 }
@@ -51,4 +51,15 @@ clearbtn.addEventListener('click',()=> {
     })
 })
 
-createGrid(64);
+changes_btn.addEventListener('click',()=>{
+    let gridsize=prompt('Please type the size of the grid',defaultGridSize);
+    if(gridsize===null){
+        return ;
+    }
+    if(typeof +gridsize== "number"){
+        gridsize= +gridsize;
+        createGrid(gridsize);
+    }else {
+        alert("ERROR");
+    }
+})
