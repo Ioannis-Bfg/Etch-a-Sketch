@@ -27,12 +27,13 @@ function createGrid(n) {
             let d = document.createElement('div');
             createBox(d);
             grid_x.appendChild(d);
-            d.addEventListener('mousemove', function () {
+            d.addEventListener('mouseenter', function () {
                 if(isMouseDown){
                     let r=Math.floor(Math.random() * 256);
                     let g=Math.floor(Math.random() * 256);
                     let b=Math.floor(Math.random() * 256);
-                    d.style.backgroundColor='black';
+                    // d.style.backgroundColor='black';
+                    d.style.backgroundColor=`rgb(${r},${g},${b})`;
                 }
             })
         }
@@ -54,12 +55,13 @@ clearbtn.addEventListener('click',()=> {
 changes_btn.addEventListener('click',()=>{
     let gridsize=prompt('Please type the size of the grid',defaultGridSize);
     if(gridsize===null){
-        return ;
+        return;
     }
-    if(typeof +gridsize== "number"){
+    gridsize = parseInt(gridsize);
+    if(!isNaN(gridsize) && gridsize > 1){
         gridsize= +gridsize;
         createGrid(gridsize);
     }else {
-        alert("ERROR");
+        alert("ERROR Not a valid number");
     }
 })
